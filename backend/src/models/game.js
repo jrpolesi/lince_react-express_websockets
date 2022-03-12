@@ -2,8 +2,8 @@ class Room {
   constructor(images) {
     this.images = images;
     this.users = [];
-    this.currentImage = this.getRandomImage();
     this.usedImagesIndex = [];
+    this.currentImage = this.getRandomImage();
   };
 
   getRandomImage() {
