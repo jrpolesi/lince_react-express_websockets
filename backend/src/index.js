@@ -26,9 +26,8 @@ io.on("connection", (socket) => {
   room.users.push({ id: socket.id, isReady: false, points: 0 });
 
   socket.on("disconnect", () => {
-
-    room.users = room.users.filter(({id}) => id !== socket.id)
-  })
+    room.users = room.users.filter(({ id }) => id !== socket.id);
+  });
 
   socket.on("is-ready", (updatedUser) => {
     const user = room.users.find(({ id }) => id === updatedUser.id);
@@ -49,8 +48,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("round-winner-user", (userId) => {
-
-    room.currentImage = room.getRandomImage()
+    room.currentImage = room.getRandomImage();
 
     const user = room.users.find(({ id }) => id === userId);
     user.points++;
@@ -58,19 +56,29 @@ io.on("connection", (socket) => {
     const sumPoints = room.users.reduce((acc, { points }) => acc + points, 0);
 
     if (sumPoints >= room.images.length) {
-      const results = room.users.reduce(
+      const winner = room.users.reduce(
         (acc, user) => {
-          acc.pontuation[user.name] = user.points;
-
-          if (user.points > acc.winnerPoints) {
-            acc.winner = user.name;
-            acc.winnerPoints = user.points;
+          if (user.points > acc.points) {
+            acc = {
+              name: user.name,
+              id: user.id,
+              points: user.points,
+            };
           }
 
           return acc;
         },
-        { winner: "", winnerPoints: 0, pontuation: {} }
+        {
+          name: "",
+          id: "",
+          points: 0,
+        }
       );
+
+      const results = {
+        winner,
+        players: room.users,
+      };
 
       socket.emit("finish-game", results);
     } else {
