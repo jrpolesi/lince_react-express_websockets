@@ -16,7 +16,7 @@ const io = new Server(expressServer, {
 
 const rooms = [];
 const images = [
-  "https://i.picsum.photos/id/40/200/300.webp?hmac=aTMsFZWazv7FcWcTI10jqm91jg4y6m0dh3yrq6smBTc",
+  "https://i.picsum.photos/id/611/200/200.jpg?hmac=1Tkz2gFbAArMMLUWylD-8s6PzYgu0sPIdO71hlp9Xs0",
   "https://i.picsum.photos/id/724/200/200.jpg?hmac=sUKRpiwXopeRQ36cEVnZgrG3Wd73G8iet9dfVSvmi8k",
   "https://i.picsum.photos/id/1051/200/200.jpg?hmac=s6d4ypEjpec8nvA2zqhWzx_6ogXYM2fJ_YJwaOM1CUA",
   "https://i.picsum.photos/id/498/200/200.jpg?hmac=qTtPQUlxKQaUfu86iZS07VWbb5NrV6vbPnPq8SM2WC8",
