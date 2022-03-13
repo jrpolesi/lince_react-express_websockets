@@ -31,7 +31,6 @@ export interface ServerToClientEvents {
   "finish-game": (result: GameResultType) => void;
 }
 
-
 export interface ClientToServerEvents {
   "is-ready": (user: Player) => void;
   "round-winner-user": (userId: string) => void;
