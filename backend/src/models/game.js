@@ -2,13 +2,17 @@ class Room {
   constructor(images) {
     this.images = images;
     this.users = [];
-    this.usedImagesIndex = [];
+    this.availablesImagesIndex = Array.from({length: this.images.length}, (_, k) => k);
     this.currentImage = this.getRandomImage();
   };
 
   getRandomImage() {
-    const imageIndex = Math.floor(Math.random() * (this.images.length + 1));
-    this.usedImagesIndex.push(imageIndex);
+    const randomIndex = Math.floor(Math.random() * (this.availablesImagesIndex.length));
+
+    const imageIndex = this.availablesImagesIndex[randomIndex]
+
+    this.availablesImagesIndex.splice(randomIndex, 1);
+
     return this.images[imageIndex];
   }
 }
