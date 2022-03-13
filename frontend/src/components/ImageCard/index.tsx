@@ -1,3 +1,4 @@
+import { Box, Image } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useRef } from "react";
 import { gameStore } from "../../store/game";
@@ -14,8 +15,8 @@ export const ImageCard = observer(({ image }: { image: string }) => {
   }
 
   return (
-    <div onClick={checkImage}>
-      <img ref={imageElement} src={image} alt="card" />
-    </div>
+    <Box onClick={checkImage} >
+      <Image ref={imageElement} w="100px" borderRadius="20px" border={"3px solid rgba(0, 0, 0, .1)"} shadow="lg" src={image} alt="card" />
+    </Box>
   );
 })
