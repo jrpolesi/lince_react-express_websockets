@@ -11,7 +11,7 @@ export const StartGameModal = observer(({toggleIsUserReady}:{toggleIsUserReady: 
 
     const name = inputValue.trim()
 
-    if(!name.trim()){
+    if(!name){
       return setError("Você deve escolher um nome")
     }
 
