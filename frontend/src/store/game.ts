@@ -5,7 +5,7 @@ import {
   GameType,
   GameResultType,
   ServerToClientEvents,
-  Player,
+  NewPlayer,
 } from "../interfaces/events";
 
 export class Game {
@@ -29,10 +29,12 @@ export class Game {
   }
 
   updateGame(game: GameType) {
+    console.log(game)
     this.game = game;
   }
 
   loadImages(images: string[]) {
+    console.log(images)
     this.images = images;
   }
 
@@ -40,7 +42,14 @@ export class Game {
     this.result = result;
   }
 
-  startGame(user: Player) {
+  startGame(newUser: NewPlayer) {
+    
+    const user = {
+      ...newUser,
+      isReady: true,
+      id: this.socket.id
+    }
+
     this.socket.emit("is-ready", user);
   }
 
