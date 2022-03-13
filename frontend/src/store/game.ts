@@ -43,7 +43,7 @@ export class Game {
   }
 
   startGame(newUser: NewPlayer) {
-    
+
     const user = {
       ...newUser,
       isReady: true,
@@ -53,8 +53,8 @@ export class Game {
     this.socket.emit("is-ready", user);
   }
 
-  sendUserResponse(userId: string) {
-    this.socket.emit("round-winner-user", userId);
+  sendAnswer() {
+    this.socket.emit("round-winner-user", this.socket.id);
   }
 }
 
