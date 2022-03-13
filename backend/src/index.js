@@ -14,7 +14,7 @@ const io = new Server(expressServer, {
   },
 });
 
-const rooms = [];
+let rooms = [];
 const images = [
   "https://i.picsum.photos/id/611/200/200.jpg?hmac=1Tkz2gFbAArMMLUWylD-8s6PzYgu0sPIdO71hlp9Xs0",
   "https://i.picsum.photos/id/724/200/200.jpg?hmac=sUKRpiwXopeRQ36cEVnZgrG3Wd73G8iet9dfVSvmi8k",
@@ -58,6 +58,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     room.users = room.users.filter(({ id }) => id !== socket.id);
+
+    if(room.users.length === 0) {
+      rooms = []
+    }
   });
 
   socket.on("is-ready", (updatedUser) => {
