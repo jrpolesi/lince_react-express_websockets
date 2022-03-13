@@ -6,6 +6,11 @@ export interface Player {
   points?: number;
 }
 
+export interface NewPlayer {
+  name: string;
+  image: string;
+}
+
 export interface GameResultType {
   winner: {
     name: string;
