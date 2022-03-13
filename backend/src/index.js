@@ -67,14 +67,14 @@ io.on("connection", (socket) => {
     user.isReady = updatedUser.isReady;
 
     if (room.users.length > 1 && room.users.every(({ isReady }) => isReady)) {
-      socket.emit("load-images", room.images);
+      io.emit("load-images", room.images);
 
       const updatedGame = {
         currentImage: room.currentImage,
         players: room.users,
       };
 
-      socket.emit("update-game", updatedGame);
+      io.emit("update-game", updatedGame);
     }
   });
 
@@ -111,14 +111,14 @@ io.on("connection", (socket) => {
         players: room.users,
       };
 
-      socket.emit("finish-game", results);
+      io.emit("finish-game", results);
     } else {
       const updatedGame = {
         currentImage: room.currentImage,
         players: room.users,
       };
 
-      socket.emit("update-game", updatedGame);
+      io.emit("update-game", updatedGame);
     }
   });
 });
