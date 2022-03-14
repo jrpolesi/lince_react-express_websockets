@@ -15,9 +15,9 @@ export const StartGameModal = observer(
 
       const name = inputValue.trim();
 
-      if (!name.trim()) {
-        return setError("Você deve escolher um nome");
-      }
+    if(!name){
+      return setError("Você deve escolher um nome")
+    }
 
       const user = {
         name,
