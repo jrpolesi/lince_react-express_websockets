@@ -4,8 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { gameStore } from "./store/game";
 import { ImageCard } from "./components/ImageCard";
-import { Center, ChakraProvider } from "@chakra-ui/react";
-import customTheme from "./styles/custom-theme";
+import { Box, Center } from "@chakra-ui/react";
 
 const App = observer(() => {
   const [isUserReady, setIsUserReady] = useState(false);
@@ -19,7 +18,7 @@ const App = observer(() => {
   }
 
   return (
-    <ChakraProvider theme={customTheme}>
+    <Box>
       {gameStore.result && <h1>{gameStore.result.winner.name}</h1>}
       {gameStore.isGameReady ? (
         <>
@@ -31,7 +30,7 @@ const App = observer(() => {
       ) : (
         <div>Aguardando os outros jogadores</div>
       )}
-    </ChakraProvider>
+    </Box>
   );
 });
 
