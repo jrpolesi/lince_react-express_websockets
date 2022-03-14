@@ -1,9 +1,26 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+
+const config: ThemeConfig = {
+  initialColorMode: "dark",
+};
 
 const customTheme = extendTheme({
-  config: {
-    initialColorMode: "dark"
-  }
-})
+  config,
+  colors: {
+    brand: {
+      50: "#EBF8FF",
+      100: "#BEE3F8",
+      200: "#378fed",
+      500: "#3182CE",
+    },
+  },
+  // styles: {
+  //   global: {
+  //     form: {
+  //       backgroundColor: "white"
+  //     }
+  //   }
+  // }
+});
 
-export default customTheme
+export default customTheme;

@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { gameStore } from "./store/game";
 import { ImageCard } from "./components/ImageCard";
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Center, Heading } from "@chakra-ui/react";
 
 const App = observer(() => {
   const [isUserReady, setIsUserReady] = useState(false);
@@ -14,7 +14,14 @@ const App = observer(() => {
   }
 
   if (!isUserReady) {
-    return <StartGameModal toggleIsUserReady={toggleIsUserReady} />;
+    return (
+      <>
+        <Heading as="h1" fontSize={["32px", "50px"]} m="30px" textAlign="center">
+          À Primeira Vista
+        </Heading>
+        <StartGameModal toggleIsUserReady={toggleIsUserReady} />
+      </>
+    );
   }
 
   return (
@@ -22,7 +29,7 @@ const App = observer(() => {
       {gameStore.result && <h1>{gameStore.result.winner.name}</h1>}
       {gameStore.isGameReady ? (
         <>
-          <Center >
+          <Center>
             <ImageCard image={gameStore.game.currentImage} />
           </Center>
           <GameTable />
