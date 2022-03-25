@@ -16,7 +16,12 @@ const App = observer(() => {
   if (!isUserReady) {
     return (
       <>
-        <Heading as="h1" fontSize={["32px", "50px"]} m="30px" textAlign="center">
+        <Heading
+          as="h1"
+          fontSize={["32px", "50px"]}
+          m="30px"
+          textAlign="center"
+        >
           À Primeira Vista
         </Heading>
         <StartGameModal toggleIsUserReady={toggleIsUserReady} />
@@ -30,7 +35,11 @@ const App = observer(() => {
       {gameStore.isGameReady ? (
         <>
           <Center>
-            <ImageCard image={gameStore.game.currentImage} />
+            <ImageCard
+              width={150}
+              image={gameStore.game.currentImage}
+              isFlipped={gameStore.canPlay}
+            />
           </Center>
           <GameTable />
         </>

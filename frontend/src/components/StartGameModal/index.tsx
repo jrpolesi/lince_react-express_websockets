@@ -83,16 +83,18 @@ export const StartGameModal = observer(
           {!!error && (
             <Center>
               <Alert status="error" fontSize="sm" h="30px">
-                {" "}
                 <AlertIcon w="15px" />
                 {error}
               </Alert>
             </Center>
           )}
 
-          <Button type="submit" variant="solid" colorScheme="brand"
-          color="white"
-          _hover={{bg: "brand.500"}}
+          <Button
+            type="submit"
+            variant="solid"
+            colorScheme="brand"
+            color="white"
+            _hover={{ bg: "brand.500" }}
           >
             Start
           </Button>

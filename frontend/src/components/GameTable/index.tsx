@@ -8,14 +8,14 @@ export const GameTable = observer(() => {
     <SimpleGrid
       maxW="1300px"
       w="95%"
-      m="auto"
+      m="25px auto"
       minChildWidth="100px"
       spacing="5px"
       justifyItems="center"
     >
       {gameStore.images.map((image, index) => (
-        <Box>
-          <ImageCard key={index} image={image} />
+        <Box key={image}>
+          <ImageCard image={image} />
         </Box>
       ))}
     </SimpleGrid>
