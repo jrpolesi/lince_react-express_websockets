@@ -1,25 +1,34 @@
 import {
   Alert,
   AlertIcon,
+  Avatar,
   Button,
   Center,
   Flex,
   Heading,
   Icon,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { FormEvent, FormEventHandler, useState } from "react";
 import { gameStore } from "../../store/game";
 import { FaUserAlt } from "react-icons/fa";
+import { AvatarChooices } from "../AvatarChooices";
 
 export const StartGameModal = observer(
   ({ toggleIsUserReady }: { toggleIsUserReady: () => void }) => {
     const [inputValue, setInputValue] = useState("");
     const [error, setError] = useState<boolean | string>(false);
+    const { onOpen, onClose, isOpen } = useDisclosure();
+    const [avatarURL, setAvatarURL] = useState("./assets/icons/avatar-0.svg");
+    const avatarSize = useBreakpointValue({ base: "xl", md: "2xl" });
 
     const handleSubmit: FormEventHandler = (
       event: FormEvent<HTMLFormElement>
@@ -34,12 +43,17 @@ export const StartGameModal = observer(
 
       const user = {
         name,
-        image:
-          "https://flyclipart.com/thumb2/user-icon-png-pnglogocom-133466.png",
+        image: avatarURL,
       };
 
       gameStore.startGame(user);
       toggleIsUserReady();
+    };
+
+    const changeAvatar = (avatarURL: string) => {
+      setAvatarURL(avatarURL);
+
+      onClose();
     };
 
     return (
@@ -61,10 +75,11 @@ export const StartGameModal = observer(
           </Heading>
 
           <Center>
-            <Image
-              w={["100px", "130px"]}
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              alt="user avatar"
+            <Avatar
+              src={avatarURL}
+              onClick={onOpen}
+              cursor="pointer"
+              size={avatarSize}
             />
           </Center>
 
@@ -99,6 +114,12 @@ export const StartGameModal = observer(
             Start
           </Button>
         </Flex>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent maxW="90%" w="600px">
+            <AvatarChooices changeAvatar={changeAvatar} />
+          </ModalContent>
+        </Modal>
       </Center>
     );
   }

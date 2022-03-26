@@ -1,6 +1,6 @@
 import { Box, Image } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useRef } from "react";
 import { gameStore } from "../../store/game";
 
 const style: CSSProperties = {
