@@ -1,9 +1,13 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { gameStore } from "../../store/game";
+import { AvatarChooices } from "../AvatarChooices";
 import { ImageCard } from "../ImageCard";
+import { UserPoints } from "../UserPoints";
+
 
 export const GameTable = observer(() => {
+  console.log({...gameStore.game.players})
   return (
     <SimpleGrid
       maxW="1300px"
@@ -18,6 +22,8 @@ export const GameTable = observer(() => {
           <ImageCard image={image} />
         </Box>
       ))}
+      
+     {gameStore.game.players &&  <UserPoints user={gameStore.game.players[0]} />}
     </SimpleGrid>
   );
 });

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { io, Socket } from "socket.io-client";
 import {
   ClientToServerEvents,
@@ -35,10 +35,12 @@ export class Game {
 
   updateGame(game: GameType) {
     this.canPlay = false;
+    this.game = game;
 
     setTimeout(() => {
-      this.game = game;
-      this.canPlay = true;
+      runInAction(() =>  {
+        this.canPlay = true;
+      })
     }, 3000);
   }
 
