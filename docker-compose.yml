@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  frontend:
+    image: lince-game-frontend
+
+  backend:
+    image: lince-game-backend
+    volumes:
+      -/
