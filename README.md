@@ -4,7 +4,7 @@
 
 ***
 
-### Name event: "load-images"
+### Event name: "load-images"
 
 `Response format`
 
@@ -23,7 +23,7 @@
 
 ***
 
-### Name event: "update-game"
+### Event name: "update-game"
 
 `Response format`
 
@@ -58,7 +58,7 @@
 
 ***
 
-### Name event: "finish-game"
+### Event name: "finish-game"
 
 `Response format`
 
@@ -99,7 +99,7 @@
 
 ***
 
-### Name event: "is-ready"
+### Event name: "is-ready"
 
 `Request format`
 
@@ -114,7 +114,7 @@
 
 ***
 
-### Name event: "round-winner-user"
+### Event name: "round-winner-user"
 
 `Request format`
 
