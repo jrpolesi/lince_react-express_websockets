@@ -17,10 +17,12 @@ export const ImageCard = observer(
     image,
     isFlipped = true,
     width = 100,
+    clickable,
   }: {
     image: string;
     isFlipped?: boolean;
     width?: number;
+    clickable?: boolean;
   }) => {
     const imageElement = useRef<HTMLImageElement>(null);
 
@@ -51,6 +53,7 @@ export const ImageCard = observer(
           style={style}
           shadow="lg"
           transform={"rotateY(180deg)"}
+          cursor={clickable ? "pointer" : "default"}
         />
         <Box style={style} bg="gray.600" shadow="lg"></Box>
       </Box>

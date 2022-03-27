@@ -113,14 +113,15 @@ io.on("connection", (socket) => {
     user.isReady = updatedUser.isReady;
 
     if (room.users.length > 1 && room.users.every(({ isReady }) => isReady)) {
-      io.emit("load-images", room.images);
-
+      
       const updatedGame = {
         currentImage: room.currentImage,
         players: room.users,
       };
-
+      
       io.emit("update-game", updatedGame);
+      
+      io.emit("load-images", room.images);
     }
   });
 
