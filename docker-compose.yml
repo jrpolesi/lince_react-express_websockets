@@ -2,9 +2,16 @@ version: '3.5'
 
 services:
   frontend:
-    image: lince-game-frontend
-
-  backend:
-    image: lince-game-backend
+    image: nginx:1.20
     volumes:
-      -/
+      - ./frontend/build:/usr/share/nginx/html
+    ports:
+      - 4000:80
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile.back
+    volumes:
+      - ./backend/:/app
+    ports:
+      - 3000:3000

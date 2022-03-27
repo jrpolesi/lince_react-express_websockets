@@ -1,0 +1,11 @@
+FROM node:16.14
+
+WORKDIR /app
+
+COPY /backend .
+
+RUN yarn
+
+ENTRYPOINT [ "yarn", "start" ]
+
+EXPOSE 3000
