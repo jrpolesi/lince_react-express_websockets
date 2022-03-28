@@ -5,6 +5,7 @@ import { useState } from "react";
 import { gameStore } from "./store/game";
 import { ImageCard } from "./components/ImageCard";
 import { Box, Center, Heading } from "@chakra-ui/react";
+import { WinnersScoreboard } from "./components/WinnersScoreboard";
 
 const App = observer(() => {
   const [isUserReady, setIsUserReady] = useState(false);
@@ -32,6 +33,7 @@ const App = observer(() => {
   return (
     <Box>
       {gameStore.result && <h1>{gameStore.result.winner.name}</h1>}
+
       {gameStore.isGameReady ? (
         <>
           <Center>
@@ -41,6 +43,8 @@ const App = observer(() => {
               isFlipped={gameStore.canPlay}
             />
           </Center>
+
+          {gameStore.result && <WinnersScoreboard />}
           <GameTable />
         </>
       ) : (

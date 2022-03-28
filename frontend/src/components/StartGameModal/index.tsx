@@ -86,6 +86,7 @@ export const StartGameModal = observer(
           <InputGroup bgColor="#EEEEEE" borderRadius="md">
             <InputLeftElement children={<Icon as={FaUserAlt} />} />
             <Input
+              maxLength={12}
               placeholder="Nickname"
               type="text"
               name="name"

@@ -1,6 +1,7 @@
-import { Avatar, Box, Flex, Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { gameStore } from "../../store/game";
+import { PlayerCard } from "../PlayerCard";
 
 export const PlayersList = observer(() => {
   return (
@@ -16,15 +17,7 @@ export const PlayersList = observer(() => {
       display={["none", "none", "flex"]}
     >
       {gameStore.game.players.map((player) => (
-        <Flex key={player.id} gap="8px">
-          <Avatar src={player.image} />
-          <Flex direction="column">
-            <Heading as="h4" fontSize="16px">
-              {player.name}
-            </Heading>
-            <Box as="span">Pontos: {player.points}</Box>
-          </Flex>
-        </Flex>
+        <PlayerCard key={player?.id} player={player} />
       ))}
     </Flex>
   );

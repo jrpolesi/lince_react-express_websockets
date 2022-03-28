@@ -25,12 +25,37 @@ export class Game {
       this.socket.on("update-game", this.updateGame);
       this.socket.on("load-images", this.loadImages);
       this.socket.on("finish-game", this.gameIsFinish);
+      this.socket.on("update-players", this.updatePlayers);
     });
 
     this.game = {} as GameType;
     this.images = [];
     this.isGameReady = false;
     this.canPlay = false;
+
+    this.result = {
+      winner: {
+        name: "string",
+        id: "string",
+        points: 200,
+      },
+      players: [
+        {
+          id: "string",
+          name: "string",
+          image: "string",
+          isReady: true,
+          points: 50,
+        },
+        {
+          id: "fafdaf",
+          name: "stradfafing",
+          image: "string",
+          isReady: true,
+          points: 500,
+        },
+      ],
+    };
   }
 
   updateGame(game: GameType) {
@@ -38,10 +63,14 @@ export class Game {
     this.game = game;
 
     setTimeout(() => {
-      runInAction(() =>  {
+      runInAction(() => {
         this.canPlay = true;
-      })
+      });
     }, 3000);
+  }
+
+  updatePlayers(game: GameType) {
+    this.game = game;
   }
 
   loadImages(images: string[]) {

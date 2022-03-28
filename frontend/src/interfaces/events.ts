@@ -28,6 +28,7 @@ export interface GameType {
 export interface ServerToClientEvents {
   "load-images": (images: string[]) => void;
   "update-game": (game: GameType) => void;
+  "update-players": (game: GameType) => void;
   "finish-game": (result: GameResultType) => void;
 }
 
