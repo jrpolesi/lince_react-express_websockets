@@ -87,7 +87,7 @@ const images = [
   "https://i.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
   "https://i.picsum.photos/id/962/200/200.jpg?hmac=XehF7z9JYkgC-2ZfSP05h7eyumIq9wNKUDoCLklIhr4",
   "https://i.picsum.photos/id/722/200/200.jpg?hmac=wNug9Ox95uwU6niL7InSfuJXj6KQLckDilJExPwv75Q",
-  "https://i.picsum.photos/id/228/200/200.jpg?hmac=o6k6dSrgAeHp1V6rxIjRR2cwEeu4DUs9Z1-sLxrQ878"
+  "https://i.picsum.photos/id/228/200/200.jpg?hmac=o6k6dSrgAeHp1V6rxIjRR2cwEeu4DUs9Z1-sLxrQ878",
 ];
 
 io.on("connection", (socket) => {
@@ -101,8 +101,15 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     room.users = room.users.filter(({ id }) => id !== socket.id);
 
-    if(room.users.length === 0) {
-      rooms = []
+    const updatedGame = {
+      currentImage: room.currentImage,
+      players: room.users,
+    };
+
+    io.emit("update-players", updatedGame);
+
+    if (room.users.length === 0) {
+      rooms = [];
     }
   });
 
@@ -113,14 +120,13 @@ io.on("connection", (socket) => {
     user.isReady = updatedUser.isReady;
 
     if (room.users.length > 1 && room.users.every(({ isReady }) => isReady)) {
-      
       const updatedGame = {
         currentImage: room.currentImage,
         players: room.users,
       };
-      
+
       io.emit("update-game", updatedGame);
-      
+
       io.emit("load-images", room.images);
     }
   });
