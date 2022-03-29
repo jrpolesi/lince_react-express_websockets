@@ -29,7 +29,7 @@ export const ImageCard = observer(
     function checkImage() {
       const imageClicked = imageElement.current?.src;
 
-      if (imageClicked === gameStore.game.currentImage) {
+      if (gameStore.canPlay && imageClicked === gameStore.game.currentImage) {
         gameStore.sendCorrectAnswer();
       }
     }

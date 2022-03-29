@@ -72,6 +72,7 @@ export class Game {
   }
 
   sendCorrectAnswer() {
+    this.canPlay = false;
     this.socket.emit("round-winner-user", this.socket.id);
   }
 
