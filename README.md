@@ -29,6 +29,7 @@ $ yarn
 ```shell
 $ yarn start
 ```
+a aplicação vai rodar na porta 5000 `http://localhost:5000` 
 
 # Frontend
 
@@ -39,7 +40,7 @@ link da aplicação: [https://lince-react-express-websockets.vercel.app/](https:
 O jogo se baseia no jogo de tabuleiro com o nome **lince** e segue as mesmas regras:
 
 - São necessários pelo menos 2 jogadores e todos jogadores devem estar **`prontos`** para a partida iniciar.
-- A cada rodada um carta(imagem) será exibida.
+- A cada rodada uma carta(imagem) será exibida.
 - O jogador que clicar primeiro na imagem igual no tabuleiro, ganha 1 ponto.
 - No final o jogador com mais pontos ganha o jogo.
 
