@@ -1,11 +1,12 @@
 import express from "express";
 import { Server } from "socket.io";
 const app = express();
+const port = process.env.PORT || 3000
 
 import Room from "./models/game.js";
 
-const expressServer = app.listen(3000, () => {
-  console.log("Running on port 3000");
+const expressServer = app.listen(port, () => {
+  console.log(`Running on port ${port}`);
 });
 
 const io = new Server(expressServer, {
