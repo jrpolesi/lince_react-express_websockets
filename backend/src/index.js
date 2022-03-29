@@ -88,6 +88,11 @@ const images = [
   "https://i.picsum.photos/id/962/200/200.jpg?hmac=XehF7z9JYkgC-2ZfSP05h7eyumIq9wNKUDoCLklIhr4",
   "https://i.picsum.photos/id/722/200/200.jpg?hmac=wNug9Ox95uwU6niL7InSfuJXj6KQLckDilJExPwv75Q",
   "https://i.picsum.photos/id/228/200/200.jpg?hmac=o6k6dSrgAeHp1V6rxIjRR2cwEeu4DUs9Z1-sLxrQ878",
+  "https://i.picsum.photos/id/830/200/200.jpg?hmac=3ce7zNUn5yg_XKy7dHgIHta7t_0vghPQnAGUSGJuBZE",
+  "https://i.picsum.photos/id/839/200/200.jpg?hmac=IKyeqXa3iOwFkcM24B_X_Qjf9643wuDTCsTiM3T6AZg",
+  "https://i.picsum.photos/id/522/200/200.jpg?hmac=-4K81k9CA5C9S2DWiH5kP8rMvaAPk2LByYZHP9ejTjA",
+  "https://i.picsum.photos/id/628/200/200.jpg?hmac=iI5Sx7kEQEboYw_QKjCo-GsB_EyIcdl7LYnW-EbgEqg",
+  "https://i.picsum.photos/id/354/200/200.jpg?hmac=ykMwenrB5tcaT_UHlYwh2ZzAZ4Km48YOmwJTFCiodJ4",
 ];
 
 io.on("connection", (socket) => {
@@ -101,10 +106,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     room.users = room.users.filter(({ id }) => id !== socket.id);
 
-    const updatedGame = {
-      currentImage: room.currentImage,
-      players: room.users,
-    };
+    const updatedGame = room.getUpdatedGame();
 
     io.emit("update-players", updatedGame);
 
@@ -119,59 +121,53 @@ io.on("connection", (socket) => {
     user.image = updatedUser.image;
     user.isReady = updatedUser.isReady;
 
-    if (room.users.length > 1 && room.users.every(({ isReady }) => isReady)) {
-      const updatedGame = {
-        currentImage: room.currentImage,
-        players: room.users,
-      };
+    room.isGameReady = room.checkPlayersStatus();
 
+    const updatedGame = room.getUpdatedGame();
+
+    if (room.users.length > 1 && room.isGameReady) {
       io.emit("update-game", updatedGame);
-
-      io.emit("load-images", room.images);
+      io.emit("start-game", { ...updatedGame, images: room.images });
     }
   });
 
   socket.on("round-winner-user", (userId) => {
-    room.currentImage = room.getRandomImage();
-
     const user = room.users.find(({ id }) => id === userId);
     user.points++;
 
-    const sumPoints = room.users.reduce((acc, { points }) => acc + points, 0);
+    if (room.availableImagesIndex.length <= 0) {
+      room.users = room.users.map((user) => ({ ...user, isReady: false }));
 
-    if (sumPoints >= room.images.length) {
-      const winner = room.users.reduce(
-        (acc, user) => {
-          if (user.points > acc.points) {
-            acc = {
-              name: user.name,
-              id: user.id,
-              points: user.points,
-            };
-          }
+      room.isGameReady = room.checkPlayersStatus();
 
-          return acc;
-        },
-        {
-          name: "",
-          id: "",
-          points: 0,
-        }
-      );
+      const updatedGame = room.getUpdatedGame();
 
-      const results = {
-        winner,
-        players: room.users,
-      };
-
-      io.emit("finish-game", results);
+      io.emit("finish-game", updatedGame);
     } else {
-      const updatedGame = {
-        currentImage: room.currentImage,
-        players: room.users,
-      };
+      room.currentImage = room.getRandomImage();
+
+      const updatedGame = room.getUpdatedGame();
 
       io.emit("update-game", updatedGame);
+    }
+  });
+
+  socket.on("restart-game", () => {
+    const user = room.users.find(({ id }) => id === socket.id);
+    user.points = 0;
+    user.isReady = true;
+
+    room.isGameReady = room.checkPlayersStatus();
+
+    const updatedGame = room.getUpdatedGame();
+
+    io.emit("update-players", updatedGame);
+
+    if (room.users.length > 1 && room.isGameReady) {
+      room.restart();
+
+      io.emit("update-game", updatedGame);
+      io.emit("start-game", { ...updatedGame, images: room.images });
     }
   });
 });
