@@ -1,7 +1,7 @@
 import express from "express";
 import { Server } from "socket.io";
 const app = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
 import Room from "./models/game.js";
 
@@ -13,7 +13,7 @@ const io = new Server(expressServer, {
   cors: {
     origin: "*",
   },
-}); 
+});
 
 let rooms = [];
 const images = [
@@ -132,8 +132,10 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("round-winner-user", (userId) => {
-    const user = room.users.find(({ id }) => id === userId);
+  socket.on("round-winner-user", (response) => {
+    if (response.image !== room.currentImage) return;
+
+    const user = room.users.find(({ id }) => id === response.userId);
     user.points++;
 
     if (room.availableImagesIndex.length <= 0) {
