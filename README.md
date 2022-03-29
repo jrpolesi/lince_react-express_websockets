@@ -180,7 +180,10 @@
 `Request format`
 
 ```json
-"KIs5jdaf7ahbndq9h"
+{
+  "userId": "KIs5jdaf7ahbndq9h",
+  "image": "http://images.com/image5.png"
+}
 ```
 
 ---
