@@ -11,7 +11,7 @@ import {
 
 export class Game {
   socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-    "http://localhost:3000"
+    "https://lince-api-socket.herokuapp.com/"
   );
   game: GameType;
   images: string[];
