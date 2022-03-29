@@ -21,6 +21,11 @@ export interface GameFromServer extends GameType {
   images: string[];
 }
 
+export interface CorrectAnswer {
+  userId: string;
+  image: string
+}
+
 export interface ServerToClientEvents {
   "start-game": (game: GameFromServer) => void;
   "update-game": (game: GameType) => void;
@@ -30,6 +35,6 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
   "is-ready": (user: Player) => void;
-  "round-winner-user": (userId: string) => void;
+  "round-winner-user": (response: CorrectAnswer) => void;
   "restart-game": () => void;
 }

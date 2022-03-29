@@ -30,7 +30,7 @@ export const ImageCard = observer(
       const imageClicked = imageElement.current?.src;
 
       if (gameStore.canPlay && imageClicked === gameStore.game.currentImage) {
-        gameStore.sendCorrectAnswer();
+        gameStore.sendCorrectAnswer(imageClicked);
       }
     }
 

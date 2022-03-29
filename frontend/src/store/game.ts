@@ -41,7 +41,7 @@ export class Game {
 
     setTimeout(() => {
       runInAction(() => {
-        this.game.currentImage = game.currentImage
+        this.game.currentImage = game.currentImage;
         this.canPlay = true;
       });
     }, 3000);
@@ -71,9 +71,12 @@ export class Game {
     this.socket.emit("is-ready", user);
   }
 
-  sendCorrectAnswer() {
+  sendCorrectAnswer(image: string) {
     this.canPlay = false;
-    this.socket.emit("round-winner-user", this.socket.id);
+    this.socket.emit("round-winner-user", {
+      userId: this.socket.id,
+      image: image,
+    });
   }
 
   restartGame() {
