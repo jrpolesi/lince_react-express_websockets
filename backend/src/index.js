@@ -13,7 +13,7 @@ const io = new Server(expressServer, {
   cors: {
     origin: "*",
   },
-});
+}); 
 
 let rooms = [];
 const images = [
