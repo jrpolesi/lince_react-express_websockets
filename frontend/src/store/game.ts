@@ -3,9 +3,10 @@ import { io, Socket } from "socket.io-client";
 import {
   ClientToServerEvents,
   GameType,
-  GameResultType,
   ServerToClientEvents,
   NewPlayer,
+  GameFromServer,
+  Player,
 } from "../interfaces/events";
 
 export class Game {
@@ -14,7 +15,7 @@ export class Game {
   );
   game: GameType;
   images: string[];
-  result?: GameResultType;
+  result?: Player[];
   isGameReady: boolean;
   canPlay: boolean;
 
@@ -23,7 +24,7 @@ export class Game {
 
     this.socket.on("connect", () => {
       this.socket.on("update-game", this.updateGame);
-      this.socket.on("load-images", this.loadImages);
+      this.socket.on("start-game", this.startGame);
       this.socket.on("finish-game", this.gameIsFinish);
       this.socket.on("update-players", this.updatePlayers);
     });
@@ -32,38 +33,15 @@ export class Game {
     this.images = [];
     this.isGameReady = false;
     this.canPlay = false;
-
-    this.result = {
-      winner: {
-        name: "string",
-        id: "string",
-        points: 200,
-      },
-      players: [
-        {
-          id: "string",
-          name: "string",
-          image: "string",
-          isReady: true,
-          points: 50,
-        },
-        {
-          id: "fafdaf",
-          name: "stradfafing",
-          image: "string",
-          isReady: true,
-          points: 500,
-        },
-      ],
-    };
   }
 
   updateGame(game: GameType) {
     this.canPlay = false;
-    this.game = game;
+    this.game.players = game.players;
 
     setTimeout(() => {
       runInAction(() => {
+        this.game.currentImage = game.currentImage
         this.canPlay = true;
       });
     }, 3000);
@@ -73,16 +51,17 @@ export class Game {
     this.game = game;
   }
 
-  loadImages(images: string[]) {
-    this.isGameReady = true;
-    this.images = images;
+  startGame(game: GameFromServer) {
+    this.isGameReady = game.isGameReady;
+    this.images = game.images;
   }
 
-  gameIsFinish(result: GameResultType) {
-    this.result = result;
+  gameIsFinish(game: GameType) {
+    this.isGameReady = false;
+    this.result = game.players;
   }
 
-  startGame(newUser: NewPlayer) {
+  iAmReady(newUser: NewPlayer) {
     const user = {
       ...newUser,
       isReady: true,
@@ -94,6 +73,11 @@ export class Game {
 
   sendCorrectAnswer() {
     this.socket.emit("round-winner-user", this.socket.id);
+  }
+
+  restartGame() {
+    this.result = undefined;
+    this.socket.emit("restart-game");
   }
 }
 

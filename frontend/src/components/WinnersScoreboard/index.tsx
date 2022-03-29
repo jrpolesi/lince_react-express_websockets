@@ -16,8 +16,8 @@ import { PlayerCard } from "../PlayerCard";
 export const WinnersScoreboard = observer(() => {
   const winners =
     gameStore.result &&
-    [...gameStore.result.players].sort((a, b) => {
-      return Number(a.points) - Number(b.points);
+    [...gameStore.result].sort((a, b) => {
+      return Number(b.points) - Number(a.points);
     });
 
   return (
@@ -36,7 +36,7 @@ export const WinnersScoreboard = observer(() => {
               <PlayerCard
                 direction="column"
                 centralized
-                player={winners && winners[0]}
+                player={winners && winners[1]}
               />
             </Box>
 
@@ -45,7 +45,7 @@ export const WinnersScoreboard = observer(() => {
               <PlayerCard
                 direction="column"
                 centralized
-                player={winners && winners[1]}
+                player={winners && winners[0]}
               />
             </Box>
 
@@ -67,6 +67,7 @@ export const WinnersScoreboard = observer(() => {
             w="90%"
             m="auto"
             _hover={{ bg: "brand.200" }}
+            onClick={gameStore.restartGame}
           >
             Novo Jogo
           </Button>

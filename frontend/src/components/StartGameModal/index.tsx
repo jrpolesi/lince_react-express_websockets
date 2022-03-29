@@ -46,7 +46,7 @@ export const StartGameModal = observer(
         image: avatarURL,
       };
 
-      gameStore.startGame(user);
+      gameStore.iAmReady(user);
       toggleIsUserReady();
     };
 

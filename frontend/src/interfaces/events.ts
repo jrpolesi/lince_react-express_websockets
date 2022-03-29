@@ -11,28 +11,25 @@ export interface NewPlayer {
   image: string;
 }
 
-export interface GameResultType {
-  winner: {
-    name: string;
-    id: string;
-    points: number;
-  };
+export interface GameType {
+  currentImage: string;
+  isGameReady: boolean;
   players: Player[];
 }
 
-export interface GameType {
-  currentImage: string;
-  players: Player[];
+export interface GameFromServer extends GameType {
+  images: string[];
 }
 
 export interface ServerToClientEvents {
-  "load-images": (images: string[]) => void;
+  "start-game": (game: GameFromServer) => void;
   "update-game": (game: GameType) => void;
   "update-players": (game: GameType) => void;
-  "finish-game": (result: GameResultType) => void;
+  "finish-game": (game: GameType) => void;
 }
 
 export interface ClientToServerEvents {
   "is-ready": (user: Player) => void;
   "round-winner-user": (userId: string) => void;
+  "restart-game": () => void;
 }

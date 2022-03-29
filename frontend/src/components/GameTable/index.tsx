@@ -7,7 +7,7 @@ import { Timer } from "../Timer";
 
 export const GameTable = observer(() => {
   return (
-    <Flex m="25px auto" w="95%" gap="20px" justify="center">
+    <Flex m="25px auto" w="95%" gap="20px" justify="center" alignItems="flex-start">
       {!gameStore.canPlay && <Timer />}
       <PlayersList />
       <SimpleGrid

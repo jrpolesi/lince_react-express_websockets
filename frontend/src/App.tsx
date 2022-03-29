@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { gameStore } from "./store/game";
 import { ImageCard } from "./components/ImageCard";
-import { Box, Center, Heading } from "@chakra-ui/react";
+import { Box, Center, Heading, Spinner, Text } from "@chakra-ui/react";
 import { WinnersScoreboard } from "./components/WinnersScoreboard";
 
 const App = observer(() => {
@@ -32,11 +32,9 @@ const App = observer(() => {
 
   return (
     <Box>
-      {gameStore.result && <h1>{gameStore.result.winner.name}</h1>}
-
-      {gameStore.isGameReady ? (
+      {gameStore.isGameReady || gameStore.result ? (
         <>
-          <Center>
+          <Center marginTop="15px">
             <ImageCard
               width={150}
               image={gameStore.game.currentImage}
@@ -48,7 +46,12 @@ const App = observer(() => {
           <GameTable />
         </>
       ) : (
-        <div>Aguardando os outros jogadores</div>
+        <Box textAlign="center" marginTop="20vh">
+          <Text m="30px" fontSize={["2xl", "4xl"]}>
+            Aguardando os outros jogadores
+          </Text>
+          <Spinner speed="2s" size="xl" thickness="4px" />
+        </Box>
       )}
     </Box>
   );
